@@ -1,3 +1,11 @@
+## quote
+```
+"If you don't have time to do it right, when will you have time to do it over?"
+John Wooden
+```
+
+
+
 # databaseExp
 database testing
 
