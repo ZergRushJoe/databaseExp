@@ -13,12 +13,12 @@ database testing
     * remember the directory where you installed in your computer
 
 5: Download MongoDB (select default option): https://www.mongodb.com/download-center#community
-  *Instructions for Windows: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+    *Instructions for Windows: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 
 6: Start up MongoDB Service (you will have to do this each time):
-  *Open Windows Command Line and enter the following commands
-  *cd C:\Program Files\MongoDB\Server\3.4\bin\
-  *mongod.exe
+    *Open Windows Command Line and enter the following commands
+    *cd C:\Program Files\MongoDB\Server\3.4\bin\
+    *mongod.exe
 
 # md formating
 https://help.github.com/articles/basic-writing-and-formatting-syntax/#lists
