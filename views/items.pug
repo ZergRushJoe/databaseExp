@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    div.center.width100.alignCenter
+        input(type="text" id="search").center
+    table.center
+        thead
+            tr
+                th.alignRight ID#
+                th.alignLeft Name
+                th.alignLeft Quantity
+        tbody
+            -for(var i = 0;i< items.length;i++)
+                tr
+                    th.alignRight #{items[i].id}
+                    th.alignLeft #{items[i].name}
+                    th.alignLeft #{items[i].quantity}

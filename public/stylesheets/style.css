@@ -1,8 +1,43 @@
-body {
+body
+{
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
+a
+{
   color: #00B7FF;
+}
+.width100
+{
+  width:100%;
+}
+
+table
+{
+  border: 1px solid black;
+  border-collapse:collapse ;
+  width: 400px;
+}
+th
+{
+  padding: 10px;
+  border: 1px solid black;
+}
+.center
+{
+  margin: 0 auto;
+
+}
+.alignCenter
+{
+  text-align: center;
+}
+.alignRight
+{
+  text-align: right;
+}
+.alignLeft
+{
+  text-align: left;
 }
