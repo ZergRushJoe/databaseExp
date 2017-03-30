@@ -19,7 +19,16 @@ database testing
     - Open Windows Command Line and enter the following commands
     - cd C:\Program Files\MongoDB\Server\3.4\bin\
     - mongod.exe
-
+# Resources 
+  - MongoDB API: http://mongodb.github.io/node-mongodb-native/2.2/api/
+  - SQLite API: https://github.com/mapbox/node-sqlite3/wiki/AP
+  
+# Current Task List 
+  - **Kalie**: Populate Database
+  - **Joe**: Mongo/SQL/Index views
+  - **Justin**: router for SQL items
+  - **Mikey/Pavan**: Router for Mongo items
+  
 # md formating
 https://help.github.com/articles/basic-writing-and-formatting-syntax/#lists
 
