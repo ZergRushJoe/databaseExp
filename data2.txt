@@ -1,0 +1,7 @@
+0001    red apple    100
+0002    green apple    200
+0003    banana    150
+0004    red grapes    1000
+0005    green grapes    20000
+0006    red pepper    80
+0007    green pepper    100
