@@ -1,0 +1,20 @@
+Harry	password
+user Ginny	123456
+user Fred	qwerty
+user George	dragon
+user Ron	monkey
+user Luna	abc123
+user Dudley	shadow
+user Hermione	1!2@kn_1
+user Lily	tigger
+user Vernon	pass
+user Sirius	love
+user James	soccer
+user Minerva	silver
+user Cho	123123
+user Draco	hello
+user Rubeus	orange
+user Albus	654321
+user Severus	access
+user Myrtle	computer
+user Remus	thunder

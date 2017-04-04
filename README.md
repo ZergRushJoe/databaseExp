@@ -1,5 +1,15 @@
-
-
+# Initialization of Databases
+  - run initDatabaes.js (only once)
+  - run populateDatabases.js (only once)
+  - if you need to reset your data bases:
+      - open mongo shell and enter the following commands:
+        1. use secProj
+        2. db.dropDatabase()
+      - open db browser and take the following actions:
+        1. open database file from path
+        2. delete the USER and ITEM tables
+      - run initDatabases.js (only once)
+      - run populateDB.js (only once)
 
 # databaseExp
 database testing
