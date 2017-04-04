@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const sqlite = require('./routes/sqlite');
 const index = require('./routes/index');
+const mongo=require('./routes/mongo');/** calling the mongodb router*/
 
 let app = express();
 
@@ -21,8 +22,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+<<<<<<< HEAD
 app.use('/sqlite',sqlite);
+=======
+
+app.use('/mongo', mongo);
+>>>>>>> refs/remotes/origin/master
 app.use('/', index);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
