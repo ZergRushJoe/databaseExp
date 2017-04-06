@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 /** here we have the function that will pass the object to the database from an array that we pull*/
-router.get("/", function(req, res, next)
+router.get("/items", function(req, res, next)
 {
     res.render('items',{items:
     [
