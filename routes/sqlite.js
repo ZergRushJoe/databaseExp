@@ -15,7 +15,7 @@ let db = new sqlite.Database('../databases/sqlite.db',sqlite.OPEN_READWRITE,func
 
 router.get('/items',function(req,res,next)
 {
-    db.all('select name,id,quantity from items;',function(err,rows)
+    db.all('select item_name as name,item_id as id,QUANTITY as quantity from item;',function(err,rows)
     {
         if(err)
         {
