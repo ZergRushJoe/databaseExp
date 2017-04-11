@@ -12,6 +12,6 @@ block content
         tbody
             -for(var i = 0;i< items.length;i++)
                 tr
-                    th.alignRight #{items[i].id}
-                    th.alignLeft #{items[i].name}
+                    th.alignRight #{items[i].id || items[i].item_id}
+                    th.alignLeft #{items[i].name || items[i].item_name}
                     th.alignLeft #{items[i].quantity}
