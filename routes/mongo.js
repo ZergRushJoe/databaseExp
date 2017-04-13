@@ -27,7 +27,10 @@ router.get("/items", function(req, res, next)
     });
 
 });
-
+router.get("/insert",function(req,res,next)
+{
+   res.render('forms');
+});
 
 module.exports = router;/**
  * Created by Pavan on 4/4/2017.

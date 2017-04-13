@@ -1,15 +1,10 @@
 extends layout
 block content
-    form(action='/Insert', method='post')
-        .input
-            label(for='name') name
-            input#name(type='text', name='name')
-        .input
-            label(for='ID') ID
-            input#ID(type='text', name='ID')
-        .input
-            label(for='Quantity') Quantity
-            input#Quantity(type='text', name='Quantity')
-        button(type='submit') Submit
+    form
+        label(for='name') name
+        input#name(type='text', name='name')
+        label(for='quantity') Quantity
+        input#quantity(type='text', name='quantity')
+    button#submit Submit
 
-    script(src="../javascripts/submit.js")
+    script(src="/javascripts/insertItem.js")
