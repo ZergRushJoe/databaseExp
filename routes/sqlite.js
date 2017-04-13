@@ -64,7 +64,7 @@ router.post('/Insert',function(req,res,next)
             next(500);
             return;
         }
-        res.redirect('/');
+        res.send(JSON.stringify({complete:true}));
     }));
 
 });
