@@ -12,7 +12,13 @@ a
 {
   width:100%;
 }
-
+p
+{
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 12;
+  color: rgba(50,50,50,.87);
+}
 table
 {
   border: 1px solid black;
