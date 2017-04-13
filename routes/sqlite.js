@@ -29,4 +29,23 @@ router.get('/items',function(req,res,next)
 
 });
 
+router.get('/Insert',function(req,res)
+{
+
+    res.render('forms')
+
+});
+router.post('/Insert',function(req,res,next)
+{
+    console.log(req.body);
+    db.run("INSERT INTO ITEMS VALUES (?,?,?)",[req.body.name,req.body.ID,req.body.quantity],(function(err)  {
+        if(err) {
+            console.log(err);
+            next(500);
+            return;
+        }
+        res.redirect('/');
+    }));
+
+});
 module.exports = router;
