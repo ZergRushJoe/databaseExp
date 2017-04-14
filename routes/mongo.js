@@ -36,7 +36,7 @@ router.get('/search',function(req,res,next)
         let item_collection = db.collection("items");
         console.log("here's yours search field:");
         console.log(req.query.name);
-        q_name='\.*'+req.query.name+'\.';
+        q_name='\.*'+req.query.name+'\.*';
         item_collection.find({item_name: new RegExp(q_name, 'i')}).toArray(function(err, rows){
             console.log(rows);
             //res.render('items', {items: rows});
