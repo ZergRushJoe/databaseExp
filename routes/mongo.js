@@ -28,10 +28,29 @@ router.get("/items", function(req, res, next)
         res.render('items', {items: rows})
     });
 });
+//adding search functionality - Kalie
+router.get('/search',function(req,res,next)
+{
+    try
+    {
+        let item_collection = db.collection("items");
+        console.log("here's yours search field:");
+        console.log(req.query.name);
+        q_name='\.*'+req.query.name+'\.';
+        item_collection.find({item_name: new RegExp(q_name, 'i')}).toArray(function(err, rows){
+            console.log(rows);
+            //res.render('items', {items: rows});
+            res.send(JSON.stringify({complete:true,items:rows}))
+        });
+    }catch(e)
+    {
+        res.send(JSON.stringify({complete:false,err:e}));
+    }
+});
 
 router.get("/insert",function(req,res,next)
 {
-   res.render('forms');
+    res.render('forms');
 });
 
 /** Created by Mikey on 4/13/17 */
