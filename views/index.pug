@@ -1,8 +1,14 @@
 extends layout
 
 block content
-    p hello, #{name}
+    h3 hello, #{name}
     ul
         li
             a(href="/itemsblank") items page
             p what a correct items page should look like
+        li
+            a(href="/sqlite/items") sql items
+            p items from the sql database
+        li
+            a(href="/mongo/items") mongo items
+            p items from the mongo database
