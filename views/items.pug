@@ -3,6 +3,7 @@ extends layout
 block content
     div.center.width100.alignCenter
         input(type="text" id="search").center
+        button#submitButton search
     table.center
         thead
             tr
@@ -15,3 +16,4 @@ block content
                     th.alignRight #{items[i].id || items[i].item_id}
                     th.alignLeft #{items[i].name || items[i].item_name}
                     th.alignLeft #{items[i].quantity}
+    script(src="/javascripts/submit.js")
