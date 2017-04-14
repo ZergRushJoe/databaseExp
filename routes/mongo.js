@@ -22,7 +22,7 @@ router.get("/items", function(req, res, next)
     console.log(db.collection("items"));
     let item_collection = db.collection("items");
 
-    item_collection.find().toArray(function(err,rows)
+    item_collection.find({$where: "this.item_name !== 'secret'"}).toArray(function(err,rows)
     {
         console.log(rows);
         res.render('items', {items: rows})
@@ -35,13 +35,20 @@ router.get('/search',function(req,res,next)
     {
         let item_collection = db.collection("items");
         console.log("here's yours search field:");
-        console.log(req.query.name);
-        q_name='\.*'+req.query.name+'\.*';
-        item_collection.find({item_name: new RegExp(q_name, 'i')}).toArray(function(err, rows){
+        if (req.query.name === "secret"){
+            throw error;
+        }
+        let q_string = "this.item_name === '"+req.query.name+"'";
+        console.log(q_string);
+        item_collection.find({$where: q_string}).toArray(function(err, rows){
             console.log(rows);
-            //res.render('items', {items: rows});
             res.send(JSON.stringify({complete:true,items:rows}))
         });
+        //non-vulnerable search below
+        /*item_collection.find({item_name: new RegExp(q_name, 'i')}).toArray(function(err, rows){
+         console.log(rows);
+         res.send(JSON.stringify({complete:true,items:rows}))
+         });*/
     }catch(e)
     {
         res.send(JSON.stringify({complete:false,err:e}));
