@@ -1,7 +1,7 @@
 /**
  * Created by joe12 on 4/14/2017.
  */
-let button = document.getElementById('submitButton');
+let button = document.getElementById('submit');
 let nameBox = document.getElementById('name');
 let quantityBox = document.getElementById('quantity');
 
@@ -10,6 +10,7 @@ function search(e)
 {
     let xhr = new XMLHttpRequest();
     xhr.open('POST','./insert',true);
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     xhr.onreadystatechange = function()
     {
         if(xhr.status == 200 &&xhr.readyState === XMLHttpRequest.DONE )

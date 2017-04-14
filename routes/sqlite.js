@@ -33,6 +33,7 @@ router.get('/search',function(req,res,next)
 {
    try
    {
+       console.log(req.query.name);
        db.all("select item_name as name,item_id as id,QUANTITY as quantity from item where item_name LIKE '%"+req.query.name+"%';",
        function(err,rows)
        {
@@ -57,7 +58,7 @@ router.get('/Insert',function(req,res)
 router.post('/Insert',function(req,res,next)
 {
     console.log(req.body);
-    db.run("INSERT INTO ITEMS VALUES (?,?,?)",[req.body.name,req.body.ID,req.body.quantity],(function(err)  {
+    db.run("INSERT INTO ITEM VALUES (NULL,?,?)",[req.body.name,parseInt(req.body.quantity)],(function(err)  {
         if(err) {
             console.log(err);
             next(500);
