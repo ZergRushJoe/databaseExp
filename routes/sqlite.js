@@ -52,9 +52,7 @@ router.get('/search',function(req,res,next)
 
 router.get('/Insert',function(req,res)
 {
-
     res.render('forms')
-
 });
 router.post('/Insert',function(req,res,next)
 {
