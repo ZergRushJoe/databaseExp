@@ -29,6 +29,27 @@ router.get('/items',function(req,res,next)
 
 });
 
+router.get('/search',function(req,res,next)
+{
+   try
+   {
+       db.all("select item_name as name,item_id as id,QUANTITY as quantity from item where item_name LIKE '%"+req.query.name+"%';",
+       function(err,rows)
+       {
+           if(err)
+           {
+               res.send(JSON.stringify({complete:false,err:err}));
+           }
+           console.log(rows);
+           res.send(JSON.stringify({complete:true,items:rows}))
+       });
+   }catch(e)
+   {
+       res.send(JSON.stringify({complete:false,err:e}))
+   }
+});
+
+
 router.get('/Insert',function(req,res)
 {
 
