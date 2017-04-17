@@ -44,6 +44,14 @@ router.get('/search',function(req,res,next)
             console.log(rows);
             res.send(JSON.stringify({complete:true,items:rows}))
         });
+        /*item_collection.find({$where: function(){
+            if (this.item_name === $req.query.name){
+                return true;
+            }
+        }}).toArray(function(err, rows){
+            console.log(rows);
+            res.send(JSON.stringify({complete:true,items:rows}))
+        });*/
         //non-vulnerable search below
         /*item_collection.find({item_name: new RegExp(q_name, 'i')}).toArray(function(err, rows){
          console.log(rows);
@@ -78,6 +86,40 @@ router.post("/insert", function(req, res, next)
             console.log("Item inserted");
         }
     });
+});
+//adding login functionality
+router.get("/log", function(req, res, next)
+{
+    res.render('login');
+});
+
+router.get('/login/',function(req,res,next)
+{
+    try
+    {
+        console.log("in /login");
+        let user_collection = db.collection("users");
+        username = req.query.username;
+        password = req.query.password;
+        console.log('username', username, 'password', password);
+
+        let q_string = "this.username === '"+req.query.username+"'" + "&& this.password === '"+req.query.password+"'";
+        //console.log(q_string);
+        user_collection.find({$where: q_string}).toArray(function(err, rows){
+            if(rows.length>0) {
+                console.log('found:', rows);
+                res.send(JSON.stringify({complete:true,items:"success!"}));
+                console.log('success');
+            }
+            else{
+                res.send(JSON.stringify({complete:true,items:"failure!"}));
+                console.log('failure');
+            }
+        });
+    }catch(e)
+    {
+        res.send(JSON.stringify({complete:false,err:e}));
+    }
 });
 
 module.exports = router;
