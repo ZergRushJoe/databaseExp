@@ -1,25 +1,70 @@
 /**
- * Created by Kales on 4/4/2017.
+ * Created by Kales on 4/17/2017.
  */
-
-const mongo = require("mongodb");
-const sqlite = require("sqlite3");
+const sqlite = require('sqlite3').verbose();
+const mongo = require('mongodb');
+MongoClient = require('mongodb').MongoClient;
 const fs = require('fs');
 const util = require('util');
 
-let sqldb = new sqlite.Database('databases/sqlite.db', function (err, sqldb) {
+MongoClient.connect('mongodb://127.0.0.1:27017/test', function (err, db) {
+    if (err) {
+        console.log(err);
+        return;
+    }
+    let adminDb = db.admin();
+    let flag = adminDb.listDatabases().then(function (dbs) {
+        let flag = false;
+        let dFlag = false;
+        while(flag == false) {
+            console.log(dbs.databases);
+            for (element in dbs.databases) {
+                if (dbs.databases[element]['name'] === 'secProj') {
+                    console.log('found item');
+                    if(dFlag !== true)
+                    {
+                        dFlag = true;
+                        MongoClient.connect('mongodb://127.0.0.1:27017/secProj', function (err, db2) {
+                            if (err) {
+                                console.log(err);
+                                return;
+                            }
+                            console.log('connected to db');
+                            db2.dropDatabase(function (err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                                console.log('deleted db');
+                            });
+                            return;
+                        });
+                    }
+                }
+                else {
+                    flag = true;
+                }
+            }
+        }
+        db.close();
+    });
+});
+
+
+let sqldb = new sqlite.Database(
+    'databases/sqlite.db',
+    function (err) {
+        if (err) {
+            console.log(err)
+        }
+    });
+
+sqldb.run('CREATE TABLE IF NOT EXISTS USER(USERNAME CHAR(20) PRIMARY KEY, PASSWORD CHAR(20));', function (err) {
     if (err) {
         console.log(err);
         return;
     }
 });
-sqldb.run('CREATE TABLE USER(ID INTEGER PRIMARY KEY AUTOINCREMENT, USERNAME CHAR(20), PASSWORD CHAR(20));', function (err) {
-    if (err) {
-        console.log(err);
-        return;
-    }
-});
-sqldb.run('CREATE TABLE ITEM(ITEM_ID INTEGER PRIMARY KEY, ITEM_NAME CHAR(20), QUANTITY INTEGER);', function (err) {
+sqldb.run('CREATE TABLE IF NOT EXISTS ITEM(ITEM_ID INTEGER PRIMARY KEY, ITEM_KEY CHAR(20), ITEM_NAME CHAR(20), QUANTITY INTEGER);', function (err) {
     if (err) {
         console.log(err);
         return;
