@@ -64,7 +64,7 @@ sqldb.run('CREATE TABLE IF NOT EXISTS USER(USERNAME CHAR(20) PRIMARY KEY, PASSWO
         return;
     }
 });
-sqldb.run('CREATE TABLE IF NOT EXISTS ITEM(ITEM_ID INTEGER PRIMARY KEY, ITEM_NAME CHAR(20), QUANTITY INTEGER);', function (err) {
+sqldb.run('CREATE TABLE IF NOT EXISTS ITEM(ITEM_ID INTEGER PRIMARY KEY, ITEM_KEY CHAR(20), ITEM_NAME CHAR(20), QUANTITY INTEGER);', function (err) {
     if (err) {
         console.log(err);
         return;
@@ -86,24 +86,14 @@ fs.readFile('data.txt', 'utf8', function (err, fdata) {
         let content = cleanstr.split('\t');
         user_pw_dictionary[content[0].replace(' ', '')] = content[1];
     }
-
-    for (user in user_pw_dictionary) {
-        password = user_pw_dictionary[user];
-        command = util.format('INSERT or IGNORE into USER(username, password) VALUES("%s", "%s")', user, password);
-        sqldb.run(command, function (err) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-        });
-    }
-
+    MongoClient = require('mongodb').MongoClient;
     MongoClient.connect('mongodb://127.0.0.1:27017/secProj', function (err, db) {
         if (err) {
             console.log(err);
             return;
         }
         let user_collection = db.collection("users");
+        //let user;
         let i = -1;
         for (user in user_pw_dictionary) {
             i++;
@@ -118,9 +108,22 @@ fs.readFile('data.txt', 'utf8', function (err, fdata) {
                 }
             });
         }
+        let j = -1;
+
         db.close();
     });
-    return;
+
+    for (user in user_pw_dictionary) {
+        password = user_pw_dictionary[user];
+        command = util.format('INSERT into USER(username, password) VALUES("%s", "%s")', user, password);
+        sqldb.run(command, function (err) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            console.log('user entry created.');
+        });
+    }
 });
 
 fs.readFile('data2.txt', 'utf8', function (err, fdata) {
@@ -135,23 +138,12 @@ fs.readFile('data2.txt', 'utf8', function (err, fdata) {
     let item;
     for (item in data) {
         let content = data[item].split('    ');
-        if (content[0] != '') {
+        if(content[0]!='') {
             item_dictionary[content[0]] = content.slice(1, content.length);
         }
     }
-
-    for (item in item_dictionary) {
-        item_name = item_dictionary[item][0];
-        quantity = item_dictionary[item][1];
-        command = util.format('INSERT or IGNORE into ITEM(item_id, item_name, quantity) VALUES(%s, "%s", %s)', item, item_name, quantity);
-        sqldb.run(command, function (err) {
-            if (err) {
-                console.log(err);
-                return;
-            }
-        });
-    }
-
+    console.log(item_dictionary);
+    MongoClient = require('mongodb').MongoClient;
     MongoClient.connect('mongodb://127.0.0.1:27017/secProj', function (err, db) {
         if (err) {
             console.log(err);
@@ -164,8 +156,9 @@ fs.readFile('data2.txt', 'utf8', function (err, fdata) {
             item_collection.insertOne({
                 _id: i,
                 item_id: item,
-                item_name: item_dictionary[item][0],
-                quantity: item_dictionary[item][1]
+                item_key: item_dictionary[item][0],
+                item_name: item_dictionary[item][1],
+                quantity:item_dictionary[item][2]
             }, function (err, prom) {
                 if (err) {
                     console.log(err);
@@ -176,4 +169,16 @@ fs.readFile('data2.txt', 'utf8', function (err, fdata) {
 
         db.close();
     });
+
+    for (item in item_dictionary) {
+        item_name = item_dictionary[item][0];
+        quantity = item_dictionary[item][1];
+        command = util.format('INSERT into ITEM(item_id, item_key, item_name, quantity) VALUES(%s, "%s", %s)', item, item_name, quantity);
+        sqldb.run(command, function (err) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+        });
+    }
 });

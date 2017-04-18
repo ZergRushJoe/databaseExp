@@ -1,7 +1,11 @@
-0001    red apple    100
-0002    green apple    200
-0003    banana    150
-0004    red grapes    1000
-0005    green grapes    20000
-0006    red pepper    80
-0007    green pepper    100
+0001    public    red apple    100
+0002    public    green apple    200
+0003    public    banana    150
+0004    public    red grapes    1000
+0005    public    green grapes    20000
+0006    public    red pepper    80
+0007    public    green pepper    100
+0008    private    kiwi    90
+0009    private    watermelon    2
+0010    private    blue berries    15
+0011    private    lettuce    1

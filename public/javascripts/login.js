@@ -21,11 +21,12 @@ function login(e)
 
             if(res.complete == true)
             {
-                header.innerHTML = "<h3>"+res.items+"<\h3></\h3>";
+                header.innerHTML = ""+res.items+"";
             }
             else
             {
                 console.log(res.err);
+                header.innerHTML= ""+res.err+"";
             }
 
 
