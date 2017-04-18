@@ -119,9 +119,6 @@ router.get('/login/',function(req,res,next)
     {
         res.send(JSON.stringify({complete:false,err:e}));
     }
-
-    let q_string = "this.username === '' || 1==1 || && this.password === ''";
-    user_collection.find({$where: "this.username === '' || 1==1 || && this.password === ''"}).toArray(function(err, rows)
 });
 
 module.exports = router;
