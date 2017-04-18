@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    div.center.width100.alignCenter
+        h3 Username:
+        input(type="text" id="username")
+        h3 Password:
+        input(type="text" id="password")
+        button#loginButton login
+        h3#resultvar
+
+    script(src="/javascripts/login.js")

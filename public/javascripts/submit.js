@@ -8,9 +8,11 @@ function search(e)
     xhr.open('get','./search?name='+inputBox.value,true);
     xhr.onreadystatechange = function()
     {
+
         if(xhr.status == 200 &&xhr.readyState === XMLHttpRequest.DONE )
         {
             let res = JSON.parse(xhr.response);
+
             if(res.complete == true)
             {
                 let items = res.items;
