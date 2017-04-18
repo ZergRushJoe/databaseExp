@@ -22,7 +22,7 @@ router.get("/items", function(req, res, next)
     console.log(db.collection("items"));
     let item_collection = db.collection("items");
 
-    item_collection.find({$where: "this.item_name !== 'secret'"}).toArray(function(err,rows)
+    item_collection.find({$where: "this.item_key !== 'private'"}).toArray(function(err,rows)
     {
         console.log(rows);
         res.render('items', {items: rows})
@@ -34,11 +34,10 @@ router.get('/search',function(req,res,next)
     try
     {
         let item_collection = db.collection("items");
-        console.log("here's yours search field:");
         if (req.query.name === "secret"){
             throw error;
         }
-        let q_string = "this.item_name === '"+req.query.name+"'";
+        let q_string = "(this.item_key === 'public' && this.item_name === '"+req.query.name+"')";
         item_collection.find({$where: q_string}).toArray(function(err, rows){
             console.log(rows);
             res.send(JSON.stringify({complete:true,items:rows}))

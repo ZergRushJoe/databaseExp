@@ -48,7 +48,6 @@ fs.readFile('data.txt', 'utf8', function (err, fdata) {
             return;
         }
         let user_collection = db.collection("users");
-        let item_collection = db.collection("items");
         //let user;
         let i = -1;
         for (user in user_pw_dictionary) {
@@ -98,6 +97,7 @@ fs.readFile('data2.txt', 'utf8', function (err, fdata) {
             item_dictionary[content[0]] = content.slice(1, content.length);
         }
     }
+    console.log(item_dictionary);
     MongoClient = require('mongodb').MongoClient;
     MongoClient.connect('mongodb://127.0.0.1:27017/secProj', function (err, db) {
         if (err) {
@@ -111,8 +111,9 @@ fs.readFile('data2.txt', 'utf8', function (err, fdata) {
             item_collection.insertOne({
                 _id: i,
                 item_id: item,
-                item_name: item_dictionary[item][0],
-                quantity:item_dictionary[item][1]
+                item_key: item_dictionary[item][0],
+                item_name: item_dictionary[item][1],
+                quantity:item_dictionary[item][2]
             }, function (err, prom) {
                 if (err) {
                     console.log(err);
@@ -127,7 +128,7 @@ fs.readFile('data2.txt', 'utf8', function (err, fdata) {
     for (item in item_dictionary) {
         item_name = item_dictionary[item][0];
         quantity = item_dictionary[item][1];
-        command = util.format('INSERT into ITEM(item_id, item_name, quantity) VALUES(%s, "%s", %s)', item, item_name, quantity);
+        command = util.format('INSERT into ITEM(item_id, item_key, item_name, quantity) VALUES(%s, "%s", %s)', item, item_name, quantity);
         sqldb.run(command, function (err) {
             if (err) {
                 console.log(err);
