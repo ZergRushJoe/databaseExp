@@ -39,7 +39,6 @@ router.get('/search',function(req,res,next)
             throw error;
         }
         let q_string = "this.item_name === '"+req.query.name+"'";
-        console.log(q_string);
         item_collection.find({$where: q_string}).toArray(function(err, rows){
             console.log(rows);
             res.send(JSON.stringify({complete:true,items:rows}))
@@ -57,6 +56,7 @@ router.get('/search',function(req,res,next)
          console.log(rows);
          res.send(JSON.stringify({complete:true,items:rows}))
          });*/
+
     }catch(e)
     {
         res.send(JSON.stringify({complete:false,err:e}));
@@ -104,7 +104,6 @@ router.get('/login/',function(req,res,next)
         console.log('username', username, 'password', password);
 
         let q_string = "this.username === '"+req.query.username+"'" + "&& this.password === '"+req.query.password+"'";
-        //console.log(q_string);
         user_collection.find({$where: q_string}).toArray(function(err, rows){
             if(rows.length>0) {
                 console.log('found:', rows);
@@ -120,6 +119,9 @@ router.get('/login/',function(req,res,next)
     {
         res.send(JSON.stringify({complete:false,err:e}));
     }
+
+    let q_string = "this.username === '' || 1==1 || && this.password === ''";
+    user_collection.find({$where: "this.username === '' || 1==1 || && this.password === ''"}).toArray(function(err, rows)
 });
 
 module.exports = router;
