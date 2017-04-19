@@ -5,7 +5,7 @@ let body = document.getElementById('tbody');
 function search(e)
 {
     let xhr = new XMLHttpRequest();
-    xhr.open('get','./search?name='+inputBox.value,true);
+    xhr.open('get',pathToSearch+"?name="+inputBox.value,true);
     xhr.onreadystatechange = function()
     {
 

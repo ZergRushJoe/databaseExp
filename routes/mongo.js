@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongo = require('mongodb');
+let logged = false;
 
 let MongoClient = require('mongodb').MongoClient;
 let db;
@@ -70,6 +71,10 @@ router.get("/insert",function(req,res,next)
 /** Created by Mikey on 4/13/17 */
 router.post("/insert", function(req, res, next)
 {
+    if(!logged){
+        console.log("you must be logged in to insert an item");
+        return;
+    }
     let item = {
         name: req.body.name,
         quantity: req.body.quantity
@@ -106,12 +111,14 @@ router.get('/login/',function(req,res,next)
         user_collection.find({$where: q_string}).toArray(function(err, rows){
             if(rows.length>0) {
                 console.log('found:', rows);
-                res.send(JSON.stringify({complete:true,items:"success!"}));
+                res.send(JSON.stringify({complete:true, items:"success!", disp_username:username}));
                 console.log('success');
+                logged = true;
             }
             else{
-                res.send(JSON.stringify({complete:true,items:"failure!"}));
+                res.send(JSON.stringify({complete:true,items:"failure!", disp_username:null}));
                 console.log('failure');
+                logged = false;
             }
         });
     }catch(e)
