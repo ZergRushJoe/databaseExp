@@ -122,3 +122,18 @@ router.get('/login/',function(req,res,next)
 });
 
 module.exports = router;
+
+function hash(string)
+{
+    let temp = "";
+    for(let i =0;i<string.length;i++)
+    {
+        temp += string.charCodeAt(i)*i%100;
+    }
+    return temp;
+}
+
+function cleaner(string)
+{
+    return string.replace(/[\\{}:‘“\/;|&]/g,'');
+}

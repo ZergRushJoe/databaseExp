@@ -100,8 +100,13 @@ router.get('/login/',function(req,res,next)
     }catch(e)
     {
         console.log(JSON.stringify(e));
-        res.send(JSON.stringify({complete:false,err:e}));
+        res.send(JSON.stringify({complete: false, err: e}));
     }
 });
 
 module.exports = router;
+
+function cleaner(string)
+{
+    return string.replace(/[;']/g,'')
+}
