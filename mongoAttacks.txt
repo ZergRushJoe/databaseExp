@@ -1,3 +1,4 @@
+Against Items:
 1) returns all documents in collection
     ') || 1==1|| ('' == '
 2) returns all documents in collection
@@ -6,3 +7,6 @@
     ') || printjsononeline("success") || ('' == '
 4) prints the item_name of all documents in collection
     ') || printjsononeline(this.item_name) || ('' == '
+
+Against Login:
+1) ' || 1==1 ||''=='
