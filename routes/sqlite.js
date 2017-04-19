@@ -160,7 +160,7 @@ router.get('/login-safe/',function(req,res,next)
     try
     {
         console.log("in /login");
-        db.get("select PASSWORD as pass from USER where USERNAME ='"+cleaner.sqlClean(req.query.username)+"';",function(err,row)
+        db.get("select PASSWORD as pass, USERNAME as user from USER where USERNAME ='"+cleaner.sqlClean(req.query.username)+"' AND PASSWORD='"+cleaner.sqlClean(req.query.password)+"';",function(err,row)
         {
             if(err)
             {
