@@ -68,4 +68,40 @@ router.post('/Insert',function(req,res,next)
     }));
 
 });
+
+router.get("/log", function(req, res, next)
+{
+    res.render('login');
+});
+
+router.get('/login/',function(req,res,next)
+{
+    try
+    {
+        console.log("in /login");
+        db.get("select PASSWORD as pass from USER where USERNAME ='"+req.query.username+"';",function(err,row)
+        {
+           if(err)
+           {
+               res.send(JSON.stringify({complete:false,err:err}));
+           }
+           if(row.pass && row.pass == req.query.password)
+           {
+               res.send(JSON.stringify({complete:true,items:"Success!"}));
+           }
+           else
+           {
+               res.send(JSON.stringify({complete:false,err:"not correct password"}));
+           }
+
+
+
+        });
+    }catch(e)
+    {
+        console.log(JSON.stringify(e));
+        res.send(JSON.stringify({complete:false,err:e}));
+    }
+});
+
 module.exports = router;
