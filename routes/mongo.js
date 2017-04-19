@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongo = require('mongodb');
+const cleaner = require('string_cleaner');
 let logged = false;
 
 let MongoClient = require('mongodb').MongoClient;
@@ -126,7 +127,9 @@ router.get('/login-safe/',function(req,res,next)
         console.log("in /login");
         let user_collection = db.collection("users");
         username = req.query.username;
+        username = cleaner.mongoClean(username);
         password = req.query.password;
+        password = cleaner.mongoClean(password);
         console.log('username', username, 'password', password);
 
         let q_string = "this.username === '"+req.query.username+"'" + "&& this.password === '"+req.query.password+"'";
@@ -157,7 +160,7 @@ router.get('/search-safe',function(req,res,next)
         if (req.query.name === "secret"){
             throw error;
         }
-        let q_string = "(this.item_key === 'public' && this.item_name === '"+req.query.name+"')";
+        let q_string = "(this.item_key === 'public' && this.item_name === '"+cleaner.mongoClean(req.query.name)+"')";
         item_collection.find({$where: q_string}).toArray(function(err, rows){
             console.log(rows);
             res.send(JSON.stringify({complete:true,items:rows}))

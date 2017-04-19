@@ -130,9 +130,12 @@ router.get('/login/',function(req,res,next)
             {
                 res.send(JSON.stringify({complete:false,err:err}));
             }
-            if(row.pass && row.pass == req.query.password)
+            if(row===undefined){
+                res.send(JSON.stringify({complete:true,items:"Failure!", disp_username:"Stranger"}));
+            }
+            else if(row.pass && row.pass == req.query.password)
             {
-                res.send(JSON.stringify({complete:true,items:"Success!"}));
+                res.send(JSON.stringify({complete:true,items:"Success!", disp_username:req.query.username}));
             }
             else
             {
