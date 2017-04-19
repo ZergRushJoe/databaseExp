@@ -16,4 +16,6 @@ block content
                     th.alignRight #{items[i].id || items[i].item_id}
                     th.alignLeft #{items[i].name || items[i].item_name}
                     th.alignLeft #{items[i].quantity}
+    script.
+        var pathToSearch = "!{path}";
     script(src="/javascripts/submit.js")
