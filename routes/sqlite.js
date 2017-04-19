@@ -124,8 +124,9 @@ router.get('/login/',function(req,res,next)
     try
     {
         console.log("in /login");
-        db.get("select PASSWORD as pass from USER where USERNAME ='"+req.query.username+"';",function(err,row)
+        db.get("select PASSWORD as pass, USERNAME as user from USER where USERNAME ='"+req.query.username+"' AND PASSWORD='"+req.query.password+"';",function(err,row)
         {
+            console.log(row);
             if(err)
             {
                 res.send(JSON.stringify({complete:false,err:err}));
@@ -133,14 +134,15 @@ router.get('/login/',function(req,res,next)
             if(row===undefined){
                 res.send(JSON.stringify({complete:true,items:"Failure!", disp_username:"Stranger"}));
             }
-            else if(row.pass && row.pass == req.query.password)
-            {
-                res.send(JSON.stringify({complete:true,items:"Success!", disp_username:req.query.username}));
-            }
+            //else if(row.pass && row.pass == req.query.password)
             else
             {
-                res.send(JSON.stringify({complete:false,err:"not correct password"}));
+                res.send(JSON.stringify({complete:true,items:"Success!", disp_username:row.user}));
             }
+            /*else
+            {
+                res.send(JSON.stringify({complete:false,err:"not correct password"}));
+            }*/
 
 
 
@@ -158,7 +160,7 @@ router.get('/login-safe/',function(req,res,next)
     try
     {
         console.log("in /login");
-        db.get("select PASSWORD as pass from USER where USERNAME ='"+cleaner.sqlClean(req.query.username)+"';",function(err,row)
+        db.get("select PASSWORD as pass, USERNAME as user from USER where USERNAME ='"+cleaner.sqlClean(req.query.username)+"' AND PASSWORD='"+cleaner.sqlClean(req.query.password)+"';",function(err,row)
         {
             if(err)
             {
