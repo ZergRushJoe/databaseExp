@@ -12,7 +12,7 @@ function login(e)
 {
     let xhr = new XMLHttpRequest();
     let encoded = encodeURIComponent('./login?username='+inputBoxUsername.value+'&password='+inputBoxPassword.value);
-    xhr.open('get','./login?username='+inputBoxUsername.value+'&password='+inputBoxPassword.value,true);
+    xhr.open('get',pathToLogin+'?username='+inputBoxUsername.value+'&password='+inputBoxPassword.value,true);
     xhr.onreadystatechange = function()
     {
         if(xhr.status == 200 &&xhr.readyState === XMLHttpRequest.DONE )
