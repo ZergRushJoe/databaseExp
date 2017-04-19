@@ -43,19 +43,6 @@ router.get('/search',function(req,res,next)
             console.log(rows);
             res.send(JSON.stringify({complete:true,items:rows}))
         });
-        /*item_collection.find({$where: function(){
-            if (this.item_name === $req.query.name){
-                return true;
-            }
-        }}).toArray(function(err, rows){
-            console.log(rows);
-            res.send(JSON.stringify({complete:true,items:rows}))
-        });*/
-        //non-vulnerable search below
-        /*item_collection.find({item_name: new RegExp(q_name, 'i')}).toArray(function(err, rows){
-         console.log(rows);
-         res.send(JSON.stringify({complete:true,items:rows}))
-         });*/
 
     }catch(e)
     {
@@ -91,7 +78,7 @@ router.post("/insert", function(req, res, next)
         }
     });
 });
-//adding login functionality
+
 router.get("/log", function(req, res, next)
 {
     res.render('login');
@@ -126,20 +113,60 @@ router.get('/login/',function(req,res,next)
         res.send(JSON.stringify({complete:false,err:e}));
     }
 });
+//safe search
+router.get("/log-safe", function(req, res, next)
+{
+    res.render('login');
+});
+
+router.get('/login-safe/',function(req,res,next)
+{
+    try
+    {
+        console.log("in /login");
+        let user_collection = db.collection("users");
+        username = req.query.username;
+        password = req.query.password;
+        console.log('username', username, 'password', password);
+
+        let q_string = "this.username === '"+req.query.username+"'" + "&& this.password === '"+req.query.password+"'";
+        user_collection.find({$where: q_string}).toArray(function(err, rows){
+            if(rows.length>0) {
+                console.log('found:', rows);
+                res.send(JSON.stringify({complete:true, items:"success!", disp_username:username}));
+                console.log('success');
+                logged = true;
+            }
+            else{
+                res.send(JSON.stringify({complete:true,items:"failure!", disp_username:null}));
+                console.log('failure');
+                logged = false;
+            }
+        });
+    }catch(e)
+    {
+        res.send(JSON.stringify({complete:false,err:e}));
+    }
+});
+//adding safe search functionality - Kalie
+router.get('/search-safe',function(req,res,next)
+{
+    try
+    {
+        let item_collection = db.collection("items");
+        if (req.query.name === "secret"){
+            throw error;
+        }
+        let q_string = "(this.item_key === 'public' && this.item_name === '"+req.query.name+"')";
+        item_collection.find({$where: q_string}).toArray(function(err, rows){
+            console.log(rows);
+            res.send(JSON.stringify({complete:true,items:rows}))
+        });
+
+    }catch(e)
+    {
+        res.send(JSON.stringify({complete:false,err:e}));
+    }
+});
 
 module.exports = router;
-
-function hash(string)
-{
-    let temp = "";
-    for(let i =0;i<string.length;i++)
-    {
-        temp += string.charCodeAt(i)*i%100;
-    }
-    return temp;
-}
-
-function cleaner(string)
-{
-    return string.replace(/[\\{}:‘“\/;|&]/g,'');
-}
