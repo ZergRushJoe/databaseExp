@@ -157,10 +157,10 @@ router.get('/search-safe',function(req,res,next)
 {
     try
     {
-        q_name = re.query.name.replace(/[=|&{}"'/]/g,'');
+        q_name = req.query.name.replace(/[=|&{}"'/]/g,'');
         console.log(q_name);
         let item_collection = db.collection("items");
-        let q_string = "(this.item_key === 'public' && this.item_name === '"+qname+"')";
+        let q_string = "(this.item_key === 'public' && this.item_name === '"+q_name+"')";
         item_collection.find({$where: q_string}).toArray(function(err, rows){
             console.log(rows);
             res.send(JSON.stringify({complete:true,items:rows}))
