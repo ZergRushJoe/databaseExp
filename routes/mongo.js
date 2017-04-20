@@ -83,7 +83,7 @@ router.post("/insert", function(req, res, next)
 
 router.get("/log", function(req, res, next)
 {
-    res.render('login');
+    res.render('login',{path:"./login"});
 });
 
 router.get('/login/',function(req,res,next)
@@ -118,22 +118,22 @@ router.get('/login/',function(req,res,next)
 //safe search
 router.get("/log-safe", function(req, res, next)
 {
-    res.render('login');
+    res.render('login',{path:"./login-safe"});
 });
 
 router.get('/login-safe/',function(req,res,next)
 {
     try
     {
-        console.log("in /login");
         let user_collection = db.collection("users");
-        username = req.query.username;
-        username = cleaner.mongoClean(username);
-        password = req.query.password;
-        password = cleaner.mongoClean(password);
+        username = ""+req.query.username+"";
+        username = username.replace(/[=|&{}"'/]/g,'');
+        console.log('replace fn: ', username.replace(/[=|&{}"'/]/g,''));
+        password = ""+req.query.password+"";
+        password = password.replace(/[=|&{}"'/]/g,'');
         console.log('username', username, 'password', password);
 
-        let q_string = "this.username === '"+req.query.username+"'" + "&& this.password === '"+req.query.password+"'";
+        let q_string = "this.username === '"+username+"' && this.password === '"+password+"'";
         user_collection.find({$where: q_string}).toArray(function(err, rows){
             if(rows.length>0) {
                 console.log('found:', rows);
@@ -157,11 +157,10 @@ router.get('/search-safe',function(req,res,next)
 {
     try
     {
+        q_name = re.query.name.replace(/[=|&{}"'/]/g,'');
+        console.log(q_name);
         let item_collection = db.collection("items");
-        if (req.query.name === "secret"){
-            throw error;
-        }
-        let q_string = "(this.item_key === 'public' && this.item_name === '"+cleaner.mongoClean(req.query.name)+"')";
+        let q_string = "(this.item_key === 'public' && this.item_name === '"+qname+"')";
         item_collection.find({$where: q_string}).toArray(function(err, rows){
             console.log(rows);
             res.send(JSON.stringify({complete:true,items:rows}))
