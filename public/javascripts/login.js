@@ -25,6 +25,7 @@ function login(e)
                 header.innerHTML = ""+res.items+"";
                 if(res.disp_username !== null) {
                     header.innerHTML += "<h3> Hello, " + res.disp_username + "<\h3></\h3>";
+                    header.innerHTML += "<a href= '"+res.url+"'> Insert</a>";
                 }
             }
             else

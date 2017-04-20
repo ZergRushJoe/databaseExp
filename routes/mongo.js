@@ -99,19 +99,19 @@ router.get('/login/',function(req,res,next)
         user_collection.find({$where: q_string}).toArray(function(err, rows){
             if(rows.length>0) {
                 console.log('found:', rows);
-                res.send(JSON.stringify({complete:true, items:"success!", disp_username:username}));
+                res.send(JSON.stringify({complete:true, items:"success!", disp_username:username,url:"/mongo/Insert"}));
                 console.log('success');
                 logged = true;
             }
             else{
-                res.send(JSON.stringify({complete:true,items:"failure!", disp_username:null}));
+                res.send(JSON.stringify({complete:true,items:"failure!", disp_username:"stranger",url:"/mongo/Insert"}));
                 console.log('failure');
                 logged = false;
             }
         });
     }catch(e)
     {
-        res.send(JSON.stringify({complete:false,err:e}));
+        res.send(JSON.stringify({complete:false,err:e,}));
     }
 });
 //safe search
