@@ -27,7 +27,7 @@ router.get("/items", function(req, res, next)
     item_collection.find({$where: "this.item_key !== 'private'"}).toArray(function(err,rows)
     {
         console.log(rows);
-        res.render('items', {items: rows})
+        res.render('items', {items: rows, path:"./search"})
     });
 });
 //adding search functionality - Kalie
@@ -41,7 +41,8 @@ router.get('/search',function(req,res,next)
         }
         let q_string = "(this.item_key === 'public' && this.item_name === '"+req.query.name+"')";
         item_collection.find({$where: q_string}).toArray(function(err, rows){
-            console.log(rows);
+            console.log('successful');
+            //console.log(rows);
             res.send(JSON.stringify({complete:true,items:rows}))
         });
 
@@ -170,6 +171,18 @@ router.get('/search-safe',function(req,res,next)
     {
         res.send(JSON.stringify({complete:false,err:e}));
     }
+});
+
+router.get("/items-safe", function(req, res, next)
+{
+    console.log(db.collection("items"));
+    let item_collection = db.collection("items");
+
+    item_collection.find({$where: "this.item_key !== 'private'"}).toArray(function(err,rows)
+    {
+        console.log(rows);
+        res.render('items', {items: rows, path:"./search-safe"})
+    });
 });
 
 module.exports = router;
