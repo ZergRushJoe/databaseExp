@@ -7,7 +7,7 @@ const mongo = require('mongodb');
 
 let sqldb = new sqlite.Database(
     'databases/sqlite.db',
-    'OPEN_READWRITE | OPEN_CREATE',
+    'OPEN_CREATE',
     function(err)
     {
         if(err)
