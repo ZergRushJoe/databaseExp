@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const sqlite = require('sqlite3').verbose();
 const cleaner = require('string_cleaner');
-
+let logged = false;
 let db = new sqlite.Database('../databases/sqlite.db',sqlite.OPEN_READWRITE,function(err)
 {
     if(err)
@@ -99,6 +99,10 @@ router.get('/Insert',function(req,res)
 });
 router.post('/Insert',function(req,res,next)
 {
+    if(!logged){
+        console.log("you must be logged in to insert an item");
+        return;
+    }
     console.log(req.body);
     db.run("INSERT INTO ITEM VALUES (NULL,?,?)",[req.body.name,parseInt(req.body.quantity)],(function(err)  {
         if(err) {
@@ -132,12 +136,14 @@ router.get('/login/',function(req,res,next)
                 res.send(JSON.stringify({complete:false,err:err}));
             }
             if(row===undefined){
-                res.send(JSON.stringify({complete:true,items:"Failure!", disp_username:"Stranger"}));
+                res.send(JSON.stringify({complete:true,items:"Failure!", disp_username:"Stranger",url:"/sqlite/Insert"}));
+                logged = false;
             }
             //else if(row.pass && row.pass == req.query.password)
             else
             {
-                res.send(JSON.stringify({complete:true,items:"Success!", disp_username:row.user}));
+                res.send(JSON.stringify({complete:true,items:"Success!", disp_username:row.user,url:"/sqlite/Insert"}));
+                logged = true;
             }
             /*else
             {
